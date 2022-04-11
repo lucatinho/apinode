@@ -57,7 +57,7 @@ router.put('/:projectId', async (req, res) => {
         const project = await Project.findByIdAndUpdate(req.params.projectId, {title, description}, {new: true});
 
         project.tasks = [];
-        await Task.remove({project: project._id})
+        await Task.deleteOne({project: project._id})
 
         await Promise.all(tasks.map(async task => {
             const projectTask = new Task({...task, project: project._id});
